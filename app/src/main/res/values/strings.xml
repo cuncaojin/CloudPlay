@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">CloudPlay</string>
+    <string name="navigation_item0_title">Hello Android</string>
+    <string name="navigation_item1_title">Java</string>
+    <string name="navigation_item2_title">Web App</string>
+    <string name="title_activity_main">Square</string>
+    <string name="menu_item2">来啊</string>
+    <string name="drawer_open">打开</string>
+    <string name="drawer_close">关闭</string>
+    
+    <string-array name="tempArray">
+        <item>春天三弄</item>
+        <item>夏荷蜻蜓</item>
+        <item>秋风意冷</item>
+        <item>冬季雪冰</item>
+    </string-array>
+</resources>

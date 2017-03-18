@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="210dp">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="192dp"
+        android:src="@drawable/bg_navigationview"
+        android:scaleType="centerCrop"
+        android:id="@+id/imageView2"/>
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="76dp"
+        android:layout_height="76dp"
+        android:background="@drawable/icon_cuncaojin"
+        android:cropToPadding="false"
+        android:scaleType="matrix"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:id="@+id/nick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageView2"
+        android:layout_marginBottom="12dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_toEndOf="@+id/logo"
+        android:layout_toRightOf="@+id/logo"
+        android:gravity="center"
+        android:shadowColor="@android:color/black"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="3"
+        android:text="cuncaojin"
+        android:textColor="@android:color/holo_orange_light"
+        android:textSize="16sp"/>
+</RelativeLayout>

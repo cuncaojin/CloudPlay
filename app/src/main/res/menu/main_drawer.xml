@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/group1"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/navigation_item0"
+            android:icon="@drawable/icon_progress_bar"
+            android:title="@string/navigation_item0_title"/>
+        <item
+            android:id="@+id/navigation_item1"
+            android:icon="@drawable/icon_placeholder"
+            android:title="@string/navigation_item1_title"/>
+        <item
+            android:id="@+id/navigation_item2"
+            android:icon="@drawable/icon_retry"
+            android:title="@string/navigation_item2_title"/>
+    </group>
+    <group
+        android:id="@+id/group2"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/anvigation_sub_item0"
+            android:icon="@drawable/icon_retry"
+            android:title="无标题的子菜单1"/>
+        <item
+            android:id="@+id/anvigation_sub_item1"
+            android:icon="@drawable/icon_retry"
+            android:title="无标题的子菜单2"/>
+    </group>
+    <item android:title="默认有标题的子菜单">
+        <menu>
+            <item
+                android:id="@+id/anvigation_sub_item2"
+                android:icon="@drawable/icon_retry"
+                android:title="子菜单1"/>
+            <item
+                android:id="@+id/anvigation_sub_item3"
+                android:icon="@drawable/icon_retry"
+                android:title="子菜单2"/>
+        </menu>
+    </item>
+</menu>
