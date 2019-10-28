@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/add"
+        android:icon="@mipmap/cuowu"
+        android:title="call" />
+    <item
+        android:id="@+id/delete"
+        android:icon="@mipmap/day7"
+        android:title="message" />
+    <item
+        android:id="@+id/setting"
+        android:icon="@mipmap/day301"
+        android:title="setting" />
+
+    <item
+        android:id="@+id/me"
+        android:icon="@mipmap/erweima"
+        android:title="me"/>
+</menu>

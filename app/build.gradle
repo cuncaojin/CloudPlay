@@ -1,14 +1,32 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
+// kotlin的注解处理器 Kotlin annotation processing tool
+apply plugin: 'kotlin-kapt'
+
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    // project build.gradle define
+    compileSdkVersion rootProject.ext.compileSdkVersion
+
     defaultConfig {
-        applicationId "io.github.cuncaojin.cloudplay"
-        minSdkVersion 14
-        targetSdkVersion 25
+        applicationId "com.cuncaojin.cloudplay"
+
+        // common_config.gradle define android project's build.gradle apply from
+        minSdkVersion project.ext.android.minSdkVersion
+        targetSdkVersion project.ext.android.targetSdkVersion
+
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
+
+        ndk {
+            // 设置支持的SO库架构
+            abiFilters 'armeabi' //, 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+        }
     }
     buildTypes {
         release {
@@ -17,29 +35,166 @@ android {
         }
     }
 
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    signingConfigs {
+        release {
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+        }
+    }
+
+    // flavorDimensions "versiontype"
+    // productFlavors {
+    //     china {
+    //         manifestPlaceholders = [app_name: "国内版", app_icon: "@mipmap/ic_launcher"]
+    //         applicationId "com.cuncaojin.cloudplay"
+    //         resValue("bool", "isChinaEdition", "true")
+    //
+    //         resValue("string", "BASE_URL_BBS", "\"http://192.168.0.0:8888/\"")
+    //         dimension "versiontype"
+    //     }
+    //     internal {
+    //         manifestPlaceholders = [app_name: "国际版", app_icon: "@mipmap/ic_launcher_global"]
+    //         applicationId "com.cuncaojin.cloudplay"
+    //         resValue("bool", "isChinaEdition", "false")
+    //
+    //         resValue("string", "BASE_URL_BBS", "\"http://192.168.0.0:8889/\"")
+    //         dimension "versiontype"
+    //     }
+    // }
 }
 
+static def releaseTime() {
+    return new Date().format("yyyyMMddHHmm", TimeZone.getTimeZone("GMT+08:00"))
+}
+
+
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    // ---------------- fresco --------------------------
-    // 支持 GIF 动图，需要添加
-    // ---------------- fresco --------------------------
-    // ---------------- fresco --------------------------
-    // ---------------- fresco --------------------------
-    // ---------------- fresco --------------------------
-    // ---------------- fresco --------------------------
-    // ---------------- fresco --------------------------
-    compile 'com.android.support:appcompat-v7:25.3.0'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.facebook.fresco:fresco:0.12.0'
-    compile 'com.facebook.fresco:animated-gif:0.12.0'
-    compile 'com.android.support:design:25.3.0'
-    compile 'com.android.support:cardview-v7:25.3.0'
-    compile 'com.android.support:recyclerview-v7:25.3.0'
-    compile 'com.google.code.gson:gson:2.2.4'
-    compile 'com.squareup.okhttp:okhttp:2.0.0'
-    testCompile 'junit:junit:4.12'
+    implementation fileTree(dir: 'libs', include: ['*.aar', '*.jar'], exclude: [])
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation "androidx.core:core-ktx:1.1.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.50"
+
+    // Rx系列
+    implementation "io.reactivex.rxjava2:rxjava:2.2.9"
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
+    implementation 'com.trello.rxlifecycle3:rxlifecycle:3.0.0'
+    implementation 'com.trello.rxlifecycle3:rxlifecycle-android-lifecycle:3.0.0'
+    // implementation 'com.uber.autodispose:autodispose:1.3.0'
+    // implementation 'com.uber.autodispose:autodispose-android:1.3.0'
+
+    // 网络请求
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.12.2'
+    implementation 'com.squareup.okio:okio:2.2.2'
+
+    // 控件注入
+    implementation 'com.jakewharton:butterknife:10.2.0'
+    kapt 'com.jakewharton:butterknife-compiler:10.2.0'
+
+    // 图片
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+
+    // log
+    implementation 'com.orhanobut:logger:2.2.0'
+    // debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-alpha-2'
+
+    // 轮播
+    implementation 'com.github.xiaohaibin:XBanner:1.7.0'
+    // // implementation 'com.google.android.material:material:1.0.0'
+
+    //上拉下拉加载
+    implementation 'com.scwang.smartrefresh:SmartRefreshHorizontal:1.0.0-andx-1'
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-16'
+
+    // 图片压缩
+    implementation 'top.zibin:Luban:1.1.8'
+    // 多选相册
+    implementation 'com.yanzhenjie:album:2.1.3'
+
+    // 拼音
+    implementation 'com.github.promeg:tinypinyin:2.0.3'
+
+    // 64K支持
+    implementation 'androidx.multidex:multidex:2.0.1'
+
+    // // 微信支付，不含微信统计
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.4.3'
+    // api('com.paypal.sdk:paypal-android-sdk:2.16.0') {
+    //     exclude group: 'io.card'
+    // }
+
+    // // 滤镜
+    // implementation 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.45-androidx'
+    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
+    implementation 'com.orhanobut:dialogplus:1.11@aar'
+    implementation 'com.github.dongjunkun:DropDownMenu:1.0.4'
+
+    // // 基础依赖包，必须要依赖
+    // implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
+    // // fragment快速实现（可选）
+    // implementation 'com.gyf.immersionbar:immersionbar-components:3.0.0'
+    // // // kotlin扩展（可选）
+    // // implementation 'com.gyf.immersionbar:immersionbar-ktx:3.0.0'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-beta-3'
+
+    // // 友盟
+    // implementation 'com.umeng.umsdk:analytics:8.1.1'
+    // implementation 'com.umeng.umsdk:common:2.1.0'
+
+    implementation 'com.yanzhenjie.recyclerview:x:1.3.2'
+    implementation 'org.sufficientlysecure:html-textview:3.7'
+
+    implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
+    implementation 'com.gyf.immersionbar:immersionbar-components:3.0.0'
+
+    // ----------------------------------------------------------------
+    // Bugly SDK
+    implementation 'com.tencent.bugly:crashreport:2.8.6'
+    // Bugly NDK
+    implementation 'com.tencent.bugly:nativecrashreport:3.7.1'
+
+    implementation 'me.yokeyword:fragmentationx:1.0.1'
+    // To get SwipeBack feature, rely on both fragmentation & fragmentation-swipeback
+    implementation 'me.yokeyword:fragmentationx:1.0.1'
+    // Swipeback is based on fragmentation. Refer to SwipeBackActivity/Fragment for your Customized SupportActivity/Fragment
+    implementation 'me.yokeyword:fragmentationx-swipeback:1.0.1'
+    // To simplify the communication between Fragments.
+    implementation 'me.yokeyword:eventbus-activity-scope:1.1.0'
+    // Your EventBus's version
+    implementation 'org.greenrobot:eventbus:3.1.1'
+    // 滤镜
+    implementation 'jp.wasabeef:blurry:3.0.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
 }
