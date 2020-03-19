@@ -5,6 +5,7 @@ import android.content.Context
 import android.text.TextUtils
 
 import androidx.multidex.MultiDex
+import com.cuncaojin.cloudplay.base.CommonData
 import com.cuncaojin.cloudplay.service.NetworkService
 
 import com.tencent.bugly.crashreport.CrashReport
@@ -37,7 +38,7 @@ class App : Application() {
         // 设置是否为上报进程
         val strategy = CrashReport.UserStrategy(context)
         strategy.isUploadProcess = processName == null || processName == packageName
-        CrashReport.initCrashReport(applicationContext, getString(R.string.BUGLY_APP_ID), BuildConfig.DEBUG, strategy)
+        CrashReport.initCrashReport(applicationContext, CommonData.Bugly_APP_ID, BuildConfig.DEBUG, strategy)
 
         // 网络监听服务
         NetworkService.enqueueWork(this)

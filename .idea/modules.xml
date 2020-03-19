@@ -5,6 +5,8 @@
       <module fileurl="file://$PROJECT_DIR$/CloudPlay.iml" filepath="$PROJECT_DIR$/CloudPlay.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/CloudPlay-app.iml" filepath="$PROJECT_DIR$/app/CloudPlay-app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cuncaojin-CloudPlay.iml" filepath="$PROJECT_DIR$/cuncaojin-CloudPlay.iml" group="CloudPlay" />
+      <module fileurl="file://$PROJECT_DIR$/app/cuncaojin-CloudPlay-app.iml" filepath="$PROJECT_DIR$/app/cuncaojin-CloudPlay-app.iml" group="CloudPlay/app" />
       <module fileurl="file://$PROJECT_DIR$/note-CloudPlay.iml" filepath="$PROJECT_DIR$/note-CloudPlay.iml" />
     </modules>
   </component>
